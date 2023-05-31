@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.tamatem.tamatempluswebview.R
 import com.tamatem.tamatempluswebview.databinding.FragmentSplashScreenBinding
 
+//This is just a nice touch to show Tamatem logo in the beginning of the app.
 @SuppressLint("CustomSplashScreen")
 class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
 
@@ -43,6 +44,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
     }
 
     private fun navigateToHomeFragment() {
+        // Just a delay to stop on the Splash Screen before proceeding to the Home Page.
         val timer = object : CountDownTimer(3000, 500) {
             override fun onTick(millisUntilFinished: Long) {
             }
@@ -55,6 +57,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
     }
 
     private fun showAnimatedTamatemLogo() {
+        //Animating the logo with Fade-in animation.
         binding.apply {
             val logoFadeAnimation = AnimationUtils.loadAnimation(activity, R.anim.logo_animation)
             ivLogo.startAnimation(logoFadeAnimation)

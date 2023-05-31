@@ -56,13 +56,13 @@ class HomePageFragment: Fragment() {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun openBrowserModal() {
+        //Here I'm showing a dialog (Modal) with custom view containing the the WebView and a Progress Bar, as requested.
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.modal_browser)
         dialog.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT
         )
-
         dialog.setCancelable(true)
         dialog.show()
 
@@ -74,13 +74,14 @@ class HomePageFragment: Fragment() {
         browseRefreshButton = dialog.findViewById(R.id.ivRefreshButton)
 
         progressBar.visibility = View.VISIBLE
-
+        // Here, I'm configuring the WebView widget settings with the required attributes in order to load Tamatem Plus's website.
         webView.settings.javaScriptEnabled = true
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
         webView.settings.domStorageEnabled = true
         webView.loadUrl(Constants.TAMATEM_PLUS_WEBSITE)
-
+        // I attached an WebViewClient implementation to the WebView widget to trigger the below events, to have a control
+        // on when the ProgressBar should be shown.
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 progressBar.visibility = View.GONE
@@ -92,13 +93,16 @@ class HomePageFragment: Fragment() {
                 progressBar.visibility = View.GONE
             }
         }
+        // This function is to update the availability of the buttons based on the current loaded website status.
         updateBrowserButtonsState()
 
         browserBackButton.setOnClickListener {
+            // Checking if the WebView can navigates backward in its history.
             if(webView.canGoBack())
                 webView.goBack()
         }
         browserForwardButton.setOnClickListener {
+            // Checking if the WebView can navigates forward in its history.
             if(webView.canGoForward())
                 webView.goForward()
         }
@@ -109,12 +113,6 @@ class HomePageFragment: Fragment() {
         closeButton.setOnClickListener{
             dialog.dismiss()
         }
-
-        /*
-        * - Master branch
-- Don't use dark mode
-        *
-        * */
     }
 
     private fun updateBrowserButtonsState() {
