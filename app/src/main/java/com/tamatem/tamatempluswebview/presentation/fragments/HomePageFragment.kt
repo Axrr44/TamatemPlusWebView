@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -56,10 +58,16 @@ class HomePageFragment: Fragment() {
     private fun openBrowserModal() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.modal_browser)
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+
         dialog.setCancelable(true)
         dialog.show()
 
         val progressBar = dialog.findViewById<ProgressBar>(R.id.progressBar)
+        val closeButton = dialog.findViewById<Button>(R.id.ivCloseButton)
         webView = dialog.findViewById(R.id.webView)
         browserBackButton = dialog.findViewById(R.id.ivBackButton)
         browserForwardButton = dialog.findViewById(R.id.ivForwardButton)
@@ -98,6 +106,15 @@ class HomePageFragment: Fragment() {
             progressBar.visibility = View.VISIBLE
             webView.reload()
         }
+        closeButton.setOnClickListener{
+            dialog.dismiss()
+        }
+
+        /*
+        * - Master branch
+- Don't use dark mode
+        *
+        * */
     }
 
     private fun updateBrowserButtonsState() {
